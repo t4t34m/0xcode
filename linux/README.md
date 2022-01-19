@@ -29,3 +29,6 @@
 
 
 
+#### [find all *.log file and remove]:
+
+`find . -name "*.log" | xargs rm`
