@@ -27,8 +27,10 @@
 
 `sed -i -e 's/{"result"://g' out.txt && sed -i -e 's/.\{1\}$/,/g' out.txt`
 
-
-
 #### [find all *.log file and remove]:
 
 `find . -name "*.log" | xargs rm`
+
+#### [find and grep apiKey string in all .sql files]:
+
+`find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done`
