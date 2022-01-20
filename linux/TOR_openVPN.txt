@@ -1,0 +1,27 @@
+sudo apt install tor
+
+sudo vi /etc/tor/torrc
+`````````````````RESULT````````````````
+  VirtualAddrNetwork 10.192.0.0/10
+  AutomapHostsOnResolve 1
+  DNSPort 10.8.0.1:53530
+  TransPort 10.8.0.1:9040
+``````````````````````````````````````````
+sudo service tor restart
+
+# Check ports
+sudo netstat -tulpen | grep tor
+`````````````````RESULT````````````````
+  tcp 0 0 10.8.0.1:9040 0.0.0.0:* LISTEN 0 3964140 1525/tor 
+  tcp 0 0 127.0.0.1:9051 0.0.0.0:* LISTEN 0 3964141 1525/tor 
+  udp 0 0 10.8.0.1:53530 0.0.0.0:* 0 3964139 1525/tor
+``````````````````````````````````````````
+# Config IPtables to route all traffic trough Tor proxy
+export IPTABLES=/sbin/iptables
+export OVPN=tun0
+
+# transparent Tor proxy
+$IPTABLES -A INPUT -i $OVPN -s 10.8.0.0/24 -m state --state NEW -j ACCEPT
+$IPTABLES -t nat -A PREROUTING -i $OVPN -p udp --dport 53 -s 10.8.0.0/24 -j DNAT --to-destination 10.8.0.1:53530
+$IPTABLES -t nat -A PREROUTING -i $OVPN -p tcp -s 10.8.0.0/24 -j DNAT --to-destination 10.8.0.1:9040
+$IPTABLES -t nat -A PREROUTING -i $OVPN -p udp -s 10.8.0.0/24 -j DNAT --to-destination 10.8.0.1:9040
