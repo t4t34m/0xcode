@@ -1,0 +1,15 @@
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo apt install mariadb-server mariadb-client -y
+sudo mysql_secure_installation
+sudo apt install php php-common php-mysql php-gd php-cli -y
+sudo apt install phpmyadmin -y
+sudo systemctl restart apache2
+sudo mysql -u root -p
+------after mysql screen: 
+#change username and password -> CREATE USER 't4t34m'@'localhost' IDENTIFIED BY 't4t34m';
+#change username -> GRANT ALL PRIVILEGES ON *.* TO 't4t34m'@'localhost' WITH GRANT OPTION;
+#-> FLUSH PRIVILEGES;
+ exit;
+ 
