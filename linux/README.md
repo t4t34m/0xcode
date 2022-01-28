@@ -1,6 +1,8 @@
 # LINUX CMD
 
 ```
+# get tor ips to ipblock.conf : allow from ip...
+wget -q https://www.dan.me.uk/torlist/ -O - | sed 's/^/allow from /g' > /var/www/html/ipblock.conf;
 # remove space :
 cat output.txt | sed -e 's/[\t ]//g;/^$/d'
 # read from output.txt line (3) to line (6) :
