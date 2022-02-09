@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=/opt/backbox/burp/ico/burp.ico
+Name[en_US]=Burp
+Exec=sh -c "bash /opt/backbox/burpsuite/run.sh; echo; ${SHELL:-bash}"
+Comment[en_US]=Burp Suite 2021 06 02
+Name=Burp
+Comment=Burp Suite
+Icon=/opt/backbox/burpsuite/ico/burp.ico
+
+
