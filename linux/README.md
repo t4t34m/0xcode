@@ -21,6 +21,10 @@ find . -name "*.log" | xargs rm
 # find and grep apiKey string in all .sql files :
 find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
 ```
+#find out all ips connected to your WiFi :
+sudo apt-get install arp-scan
+ifconfig
+sudo arp-scan --interface=wlx503eaa7a4654 --localnet
 
 #### ffmpeg conv mp4 to wav:
 
