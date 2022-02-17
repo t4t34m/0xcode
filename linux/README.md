@@ -5,6 +5,10 @@
 wget -q https://www.dan.me.uk/torlist/ -O - | sed 's/^/allow from /g' > /var/www/html/ipblock.conf;
 # remove space :
 cat output.txt | sed -e 's/[\t ]//g;/^$/d'
+# Clean /var/log or only gz file:
+sudo find /var/log -type f -delete
+sudo find /var/log -type f -delete -regex ".*\.gz$"
+sudo find /var/log -type f -delete -regex ".*\.[0-9]$"
 # read from output.txt line (3) to line (6) :
 sed -n '3,6p' output.txt
 # remove last string in output.txt :
