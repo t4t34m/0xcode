@@ -24,6 +24,8 @@ sed -i -e 's/{"result"://g' out.txt && sed -i -e 's/.\{1\}$/,/g' out.txt
 find . -name "*.log" | xargs rm
 # find and grep apiKey string in all .sql files :
 find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
+# cat and grep between "" refresh_token:"xxxxxxxx",: xxxxx will be output
+cat errors.txt | grep -oP 'refresh_token":"\K[^"]+'
 ```
 #find out all ips connected to your WiFi :
 sudo apt-get install arp-scan
