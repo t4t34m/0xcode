@@ -16,6 +16,8 @@ sed 's/.\{1\}$//' output.txt
 # remove string from output.txt ex:> {"result": < :
 sed -i -e 's/XXXXXXX//g' output.txt
 sed -i -e 's/{"result"://g' output.txt
+#remove duplicated in output.txt 
+sed '/^$/d' output.txt | awk '!a[$1]++' >> output_clear.txt
 # tested remove `{"result":` and `}` in the end , :
 sed -i -e 's/{"result"://g' output.txt && sed 's/.\{1\}$//' output.txt
 # find and replace in the end } replace it with , :
