@@ -1,5 +1,9 @@
 # garbage codes
 
+```
+pip install -U requests[socks] --ignore-installed --user
+```
+
 #### [✔] print from top to down
 ```python
 
