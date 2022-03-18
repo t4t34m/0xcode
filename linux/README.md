@@ -1,6 +1,9 @@
 # LINUX CMD
 
 ```
+#install VPN HMA .. 
+1: download : torsocks wget https://vpn.hidemyass.com/vpn-config/vpn-configs.zip
+2: go to > wIfI > add VPN > select (import a file) select /vpn/TCP/ .. add username & password from HMA
 # get tor ips to ipblock.conf : allow from ip...
 wget -q https://www.dan.me.uk/torlist/ -O - | sed 's/^/allow from /g' > /var/www/html/ipblock.conf;
 # remove space :
