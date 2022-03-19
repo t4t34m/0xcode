@@ -1,6 +1,11 @@
 # LINUX CMD
 
 ```
+#install hyper windows 10
+Dism /online /Enable-Feature /FeatureName:HypervisorPlatform
+Dism /online /Enable-Feature /FeatureName:VirtualMachinePlatform
+*Y to restart pc, than > Start > search : Optional features <-- Virtual Machine Platform + Windows Hypervisor Platform than restart pc.
+
 # add certificate to local and active: 
 sudo cp ca.crt /usr/local/share/ca-certificates
 sudo update-ca-certificates
