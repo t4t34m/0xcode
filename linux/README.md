@@ -1,6 +1,10 @@
 # LINUX CMD
 
 ```
+# add certificate to local and active: 
+sudo cp ca.crt /usr/local/share/ca-certificates
+sudo update-ca-certificates
+wget --quiet https://www.hidemyass.com/vpn-config/keys/ca.crt https://www.hidemyass.com/vpn-config/keys/hmauser.crt https://www.hidemyass.com/vpn-config/keys/hmauser.key
 #install VPN HMA .. 
 1: download : torsocks wget https://vpn.hidemyass.com/vpn-config/vpn-configs.zip
 2: go to > wIfI > add VPN > select (import a file) select /vpn/TCP/ .. add username & password from HMA
