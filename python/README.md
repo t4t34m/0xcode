@@ -2,6 +2,7 @@
 
 ```
 pip install -U requests[socks] --ignore-installed --user
+pip3 install -r pip_req.txt --usre
 ```
 
 #### [✔] print from top to down
