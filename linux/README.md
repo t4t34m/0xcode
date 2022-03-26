@@ -5,10 +5,15 @@
 sudo timedatectl set-timezone Asia/Riyadh
 echo "Asia/Riyadh" | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
-#install HyperV windows 10
+#install HyperV windows 10 open powershell as admin:
+DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
 Dism /online /Enable-Feature /FeatureName:HypervisorPlatform
 Dism /online /Enable-Feature /FeatureName:VirtualMachinePlatform
-*Y to restart pc, than > Start > search : Optional features <-- Virtual Machine Platform + Windows Hypervisor Platform than restart pc.
+#stop HyperV :
+bcdedit /set hypervisorlaunchtype off
+or
+DISM /Online /Disable-Feature:Microsoft-Hyper-V
+#Next : Start > search : features <-- Virtual Machine Platform + Windows Hypervisor Platform than restart pc.
 #install VPN HMA .. 
 sudo apt-get install network-manager-openvpn-gnome
 torsocks wget https://vpn.hidemyass.com/vpn-config/vpn-configs.zip
