@@ -1,17 +1,23 @@
 # LINUX CMD
 
 ```
-#install hyper windows 10
+#fix linux time and data ... from terminal:
+sudo timedatectl set-timezone Asia/Riyadh
+echo "Asia/Riyadh" | sudo tee /etc/timezone
+sudo dpkg-reconfigure --frontend noninteractive tzdata
+#install HyperV windows 10
 Dism /online /Enable-Feature /FeatureName:HypervisorPlatform
 Dism /online /Enable-Feature /FeatureName:VirtualMachinePlatform
 *Y to restart pc, than > Start > search : Optional features <-- Virtual Machine Platform + Windows Hypervisor Platform than restart pc.
-
-# add certificate to local and active: 
-sudo cp ca.crt /usr/local/share/ca-certificates
-sudo update-ca-certificates
-wget --quiet https://www.hidemyass.com/vpn-config/keys/ca.crt https://www.hidemyass.com/vpn-config/keys/hmauser.crt https://www.hidemyass.com/vpn-config/keys/hmauser.key
 #install VPN HMA .. 
-1: download : torsocks wget https://vpn.hidemyass.com/vpn-config/vpn-configs.zip
+sudo apt-get install network-manager-openvpn-gnome
+torsocks wget https://vpn.hidemyass.com/vpn-config/vpn-configs.zip
+wget --quiet https://www.hidemyass.com/vpn-config/keys/ca.crt
+wget --quiet https://www.hidemyass.com/vpn-config/keys/hmauser.crt
+wget --quiet https://www.hidemyass.com/vpn-config/keys/hmauser.key
+sudo cp ca.crt /usr/local/share/ca-certificates
+sudo cp hma* /usr/local/share/ca-certificates
+sudo update-ca-certificates
 2: go to > wIfI > add VPN > select (import a file) select /vpn/TCP/ .. add username & password from HMA
 # get tor ips to ipblock.conf : allow from ip...
 wget -q https://www.dan.me.uk/torlist/ -O - | sed 's/^/allow from /g' > /var/www/html/ipblock.conf;
@@ -40,6 +46,7 @@ find . -name "*.log" | xargs rm
 find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
 # cat and grep between "" refresh_token:"xxxxxxxx",: xxxxx will be output
 cat errors.txt | grep -oP 'refresh_token":"\K[^"]+'
+- gnome-terminal -- bash -c "<command>; exec bash"
 ```
 #find out all ips connected to your WiFi :
 sudo apt-get install arp-scan
