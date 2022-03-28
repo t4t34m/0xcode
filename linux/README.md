@@ -58,11 +58,15 @@ sudo apt-get install arp-scan
 ifconfig
 sudo arp-scan --interface=wlx503eaa7a4654 --localnet
 
-#### ffmpeg conv mp4 to wav:
+#### ffmpeg conv mp4 to wav convert mp4 to iphone/ipad video from linux:
 
     ffmpeg -i e.mp4 -ac 2 -f wav e.wav
     ffmpeg -i 1.mp4 -codec copy output.mp4
     ffmpeg -i 1.mp4 -vcodec libx264 -pix_fmt yuv420p new.mp4
+    
+    #Fix Mp4 from Linux to Iphone : 
+    ffmpeg -i BAD_VID.mp4 -pix_fmt yuv420p -crf 18 good1.mp4
+    ffmpeg -i BAD_VID.mp4 -pix_fmt yuv420p -c:v libx264 -crf 24 -pix_fmt yuv420p -tune film -c:a aac -b:a 192k -ar 44100 -vol 300 -strict -2 -speed fastest -crf 18 good2.mp4
 
 #### gcc:
 
