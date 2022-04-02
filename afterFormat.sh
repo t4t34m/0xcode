@@ -73,14 +73,22 @@ if [[ "$answer" == "1" ]];
 then
 pip install --upgrade pip --user --no-warn-script && pip install --upgrade pip --user --no-warn-script
 pip3 install --upgrade pip --user --no-warn-script && pip3 install --upgrade pip --user --no-warn-script
-pip3 install lxml==4.6.3 rich multiprocessing virtualenv setdefaultencoding bandit PySocks ujson cryptography typing python-telegram-bot fierce scrapy python-dateutil==2.1 requests-html unidecode stem requests_toolbelt python-bidi arabic-reshaper Counter pexpect aiohttp aiofiles pyOpenSSL asyncio requests --user --no-warn-script
-pip3 install --upgrade rich multiprocessing virtualenv setdefaultencoding bandit PySocks ujson cryptography typing python-telegram-bot fierce scrapy python-dateutil==2.1 requests-html anyascii unidecode stem requests_toolbelt python-bidi arabic-reshaper Counter pexpect aiohttp aiofiles pyOpenSSL asyncio requests --user --no-warn-script
-pip3 install --upgrade requests[socks] --user
-pip3 install --upgrade pip lxml==4.6.3 --user
-pip3 install --upgrade PyTelegramBotAPI==2.2.3 --user
-pip3 install --upgrade setuptools --user
+pip install lxml==4.6.3 rich virtualenv setdefaultencoding bandit PySocks ujson cryptography typing python-telegram-bot fierce scrapy python-dateutil==2.1 requests-html unidecode stem requests_toolbelt python-bidi arabic-reshaper Counter pexpect aiohttp aiofiles pyOpenSSL asyncio requests --user --no-warn-script
+pip install rich virtualenv setdefaultencoding bandit PySocks ujson cryptography typing python-telegram-bot fierce scrapy python-dateutil==2.1 requests-html anyascii unidecode stem requests_toolbelt python-bidi arabic-reshaper Counter pexpect aiohttp aiofiles pyOpenSSL asyncio requests --user
+pip3 install requests[socks] --user
+pip3 install pip lxml==4.6.3 --user
+pip3 install PyTelegramBotAPI==2.2.3 --user
+pip3 install setuptools --user
 pip3 install pandas --trusted-host pypi.org --trusted-host files.pythonhosted.org --user
 pip3 install mysqlclient --user
+pip install Scrapy 
+pip3 install selenium --user
+pip3 install fierce
+pip3 install python-dateutil==2.8.1 --user
+pip3 install typing --user
+pip3 install ujson
+pip install multiprocess
+sudo pip3 install bandit
 fi
 clear
 printf """\n[\e[1;38;5;112m + \e[0m] \e[1;37m Start INSTALL gem gobuster wpscan nokogiri \e[0m\n"""
@@ -131,16 +139,19 @@ if [ -d "/opt/backbox/wpscan" ]
 then
     printf """\n[\e[1;38;5;120m + \e[0m] \e[1;37m Found WPscan \e[0m\n"""
 else
+    sudo chown -R $USER:$USER /opt/backbox
     cd /opt/backbox
     git clone https://github.com/wpscanteam/wpscan.git
     sleep 3
     cd wpscan/
     sudo gem install bundler && bundle config set --local without 'test'
+    sudo chown -R $USER:$USER /opt/backbox
 fi
 if [ -d "/opt/backbox/jm511hacker" ] 
 then
     printf """\n[\e[1;38;5;120m + \e[0m] \e[1;37m Found jm511hacker \e[0m\n"""
 else
+    sudo chown -R $USER:$USER /opt/backbox
     cd /opt/backbox/
     git clone https://github.com/jm511hacker/jm511hacker.git
     git clone https://github.com/t4t34m/0xcode.git
@@ -185,6 +196,7 @@ clear
 echo "# DISABLE UFW sudo ufw disable ..."
 sudo ufw disable
 echo "# Cleaning ..."
+sudo chown -R $USER:$USER /opt/backbox
 sudo journalctl --vacuum-time=200M
 sudo du -sh ~/.cache/thumbnails
 sudo rm -rf ~/.cache/thumbnails/*
