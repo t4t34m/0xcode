@@ -1,6 +1,10 @@
 # LINUX CMD
 
 ```
+#fix panel error (missing)
+ALT+F2 and type: xfce4-panel --restart
+or
+ALT+F2 and type: xfce4-panel --preferences
 #fix linux time and data ... from terminal:
 sudo timedatectl set-timezone Asia/Riyadh
 echo "Asia/Riyadh" | sudo tee /etc/timezone
