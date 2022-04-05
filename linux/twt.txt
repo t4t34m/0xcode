@@ -1,0 +1,21 @@
+GET /i/api/graphql/7mjxD3-C6BxitPMVQ6w0-Q/UserByScreenName?variables=%7B%22screen_name%22%3A%22xtajr%22%2C%22withSafetyModeUserFields%22%3Atrue%2C%22withSuperFollowsUserFields%22%3Atrue%7D HTTP/2
+Host: twitter.com
+Cookie: guest_id_marketing=v1%3A164916908596853292; guest_id_ads=v1%3A164916908596853292; personalization_id="v1_K0glcbtzEVvRSsCEnLf2PA=="; guest_id=v1%3A164916908596853292; ct0=cec96245a7f59072ed2ccb771a57b336; _ga=GA1.2.1195987458.1649169093; _gid=GA1.2.1409787856.1649169093; gt=1511381745131835399
+Sec-Ch-Ua: "(Not(A:Brand";v="8", "Chromium";v="98"
+X-Twitter-Client-Language: en
+X-Csrf-Token: cec96245a7f59072ed2ccb771a57b336
+Sec-Ch-Ua-Mobile: ?0
+Authorization: Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA
+Content-Type: application/json
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36
+X-Guest-Token: 1511381745131835399
+X-Twitter-Active-User: yes
+Sec-Ch-Ua-Platform: "Linux"
+Accept: */*
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://twitter.com/search?q=xtajr&src=typed_query
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+
