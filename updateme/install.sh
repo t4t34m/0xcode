@@ -15,7 +15,6 @@ else
 mkdir -p $PATH_updateme
 sleep 0.1
 cp -R icons/ $PATH_updateme
-
 read -p $'Enter your root password : ' r00tp3ss
 sed -i "$ a\myrootpass=\"$r00tp3ss\"" ~/.bashrc
 export myrootpass="$r00tp3ss"
