@@ -1,7 +1,17 @@
 # FOR PHP 
 
+## 1 - Steal input from victom [ steal_input.php ](steal_input_victom.php)
+## 2 - Nmap to MySQL - Save output as out.xml and run [this](nmap_to_DB.php) 
+## 3 - Get URL Header in PHP : [Print Header](jsonHeader.php)
+    ["HTTP\/1.1 301 Moved Permanently","Date: Fri, 22 Apr 2022 09:43:44 GMT","Server: Apache","Location: https:\/\/x.net\/","Content-Length: 225","Connection: close","Content-Type: text\/html; charset=iso-8859-1","HTTP\/1.1 200 OK","Date: Fri, 22 Apr 2022 09:43:45 GMT","Server: Apache","Access-Control-Allow-Origin: *","Vary: Accept-Encoding","Connection: close","Content-Type: text\/html; charset=utf-8"]
 
-# For Hacking - MIME type of file
+## 4 - Auto JSON TO MYSQL in PHP : [JSON TO MySQL](JSON_toMySQL.php)
+
+## 5 - Domain Checker Give $domain="target" in [Domain Checker](Domain_Checker.php)
+---
+
+## MIME type of file
+
     'xl'    => 'application/excel'
     'js'    => 'application/javascript'
     'hqx'   => 'application/mac-binhex40'
