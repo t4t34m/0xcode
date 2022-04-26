@@ -1,8 +1,6 @@
 # 0xc0d3 - JunkYard - 0cmd h4ck1ng
 
 ## 🔸 1 - Synergy Pro 1.8.8 - Keyboard & mouse sharing 
-##### Download from : [ https://sourceforge.net/projects/synergy-stable-builds/ ](https://sourceforge.net/projects/synergy-stable-builds/)
-##### Or:
     sudo sed -i '$ a\\ndeb http://cz.archive.ubuntu.com/ubuntu bionic main universe' /etc/apt/sources.list    
     sudo apt update
     sudo apt install libqt4-network libqtcore4 libqtcore4 libcurl3 libqtgui4 libavahi-compat-libdnssd1
@@ -21,5 +19,12 @@
 ![alt text](https://imgur.com/aHpfhCc.png)
    
  ---
- 
+## 🔸 4 - BYPASS CORS with JS & Python - [javascript](/javascript/)
 
+![alt text](https://imgur.com/VMiKAb4.png)
+
+![alt text](https://imgur.com/2OKNcGT.png)
+   
+ ---
+
+ 
