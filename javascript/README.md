@@ -10,4 +10,6 @@
 ## 4 open : http://localhost/target_folder/index.html and click send (watch console)
 
 
+![alt text](https://imgur.com/VMiKAb4.png)
 
+![alt text](https://imgur.com/2OKNcGT.png)
