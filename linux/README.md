@@ -67,6 +67,7 @@ sudo arp-scan --interface=wlx503eaa7a4654 --localnet
     ffmpeg -i e.mp4 -ac 2 -f wav e.wav
     ffmpeg -i 1.mp4 -codec copy output.mp4
     ffmpeg -i 1.mp4 -vcodec libx264 -pix_fmt yuv420p new.mp4
+    ffmpeg -i xxxxxXxxx.flv -c:v libx264 -c:a aac -strict experimental -b:a 128k -crf 23 -profile:v baseline -movflags faststart output.mp4
     
     #Fix Mp4 from Linux to Iphone : 
     ffmpeg -i BAD_VID.mp4 -pix_fmt yuv420p -crf 18 good1.mp4
