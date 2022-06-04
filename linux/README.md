@@ -69,6 +69,10 @@ sudo arp-scan --interface=wlx503eaa7a4654 --localnet
     ffmpeg -i 1.mp4 -vcodec libx264 -pix_fmt yuv420p new.mp4
     ffmpeg -i xxxxxXxxx.flv -c:v libx264 -c:a aac -strict experimental -b:a 128k -crf 23 -profile:v baseline -movflags faststart output.mp4
     
+    #Add img to mp4 (mp3 => mp4)iphone:
+    ffmpeg -loop 1 -i XXXXXXXIMAGE_UPLOADED_HEREXXXXXXX.jpg -i XXXXXXXSONG_HERE_XXXXXXX.mp3 -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:-1:-1:color=black,setsar=1,format=yuv420p" -shortest -fflags +shortest output.mp4
+
+    
     #Fix Mp4 from Linux to Iphone : 
     ffmpeg -i BAD_VID.mp4 -pix_fmt yuv420p -crf 18 good1.mp4
     ffmpeg -i BAD_VID.mp4 -pix_fmt yuv420p -c:v libx264 -crf 24 -pix_fmt yuv420p -tune film -c:a aac -b:a 192k -ar 44100 -vol 300 -strict -2 -speed fastest -crf 18 good2.mp4
