@@ -1,92 +1,60 @@
 #!/usr/bin/bash
-#------------------------#
 t4t_pwd=$( (pwd) )
 t4t_icon="$t4t_pwd"
-Ilogin="$t4t_icon/icons/login.png"
-Ifinger="$t4t_icon/icons/finger.png"
-Iport="$t4t_icon/icons/port.png"
-Iwifi="$t4t_icon/icons/wifi.png"
+datex=$(date '+%x %A %r')
+timen0w=$(tr -dc a-z0-9 </dev/urandom | head -c 4 ; echo '')
+timen1w=$(date '+%Y_%m_%d')
 Iip="$t4t_icon/icons/ip.ico"
-Ierror="$t4t_icon/icons/error.ico"
-Iaddico="$t4t_icon/icons/add.ico"
 Ibypassed="$t4t_icon/icons/bypassed.png"
-#------------------------------#
 CM=$(cat ~/.bashrc | grep -E -o 'myrootpass.+".+"' | awk -F '"' '{ print $2 }')
-if [[ "$CM" == "" ]]; then 
+if [[ "$CM" == "" ]]; then
     printf "run ./install.sh first\n"
     exit 1
 else
-export myrootpass="$CM"
-source ~/.bashrc
+    export myrootpass="$CM"
+    source ~/.bashrc
 fi
-#------------------------------#
-notify-send -u normal -t 6000 "GOOD" "$myrootpass starting ..." -i $Iaddico
-logx=$( (lastlog -b 0 -t 30) )
-notify-send -u normal -t 10000 " [ + ] Lastlog " "$logx" -i $Ilogin
-EES2=$( (finger) )
-notify-send -u normal -t 10000 " [ + ] Login " "$EES2" -i $Ifinger
-SEopen=$( (netstat -tulpn | grep LISTEN) )
-notify-send -u normal -t 10000 " [ + ] port open" "$SEopen" -i $Iport
-SElsof=$( (lsof -i -P -n) )
-notify-send -u normal -t 10000 " [ + ] LISTEN TCP " "$SElsof" -i $Iip
-SElsof2=$( (lsof -i -P -n | grep ESTABLISHED) )
-notify-send -u normal -t 10000 " [ + ] ESTABLISHED " "$SElsof2" -i $Iip
-myInterFace=$(ip route | awk '/dev/ {f=NR} f&&NR-1==f' RS=" " | sort | uniq -d)
-for value in $myInterFace
-    do
-        CheckIPS=$( (echo "$myrootpass" | sudo -S -k arp-scan -l --interface=$value | grep -E "^[0-9]{1,3}+.+[0-9]{1,3}+.+[0-9]{1,3}+.+[0-9]{1,3}.+") )
-        notify-send -u normal -t 10000 " [ + ] IP CONNECTED IN $value " "$CheckIPS" -i $Iwifi
-    done
-      
- 
-notify-send -u normal -t 5200 "Restarting Tor" "Tor check" -i $Ibypassed
-echo "$myrootpass" | sudo -S -k service tor restart
-notify-send -u normal -t 5200 "Cleaning lock files if found" "Clean lock files" -i $Ibypassed
-echo "$myrootpass" | sudo -S -k rm -r /var/cache/apt/archives/lock
-echo "$myrootpass" | sudo -S -k -r /var/lib/dpkg/lock-frontend
-echo "$myrootpass" | sudo -S -k rm -r /var/lib/dpkg/lock
-notify-send -u normal -t 5200 "Start update" "Updating ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt update
-notify-send -u normal -t 5200 "Cleaning apt" "Clean apt ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt autoremove -y
-notify-send -u normal -t 5200 "DONE" "AutoRemove ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt remove -y
-notify-send -u normal -t 5200 "DONE" "Remove ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt clean -y
-notify-send -u normal -t 5200 "DONE" "clean ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt autoclean -y
-notify-send -u normal -t 5200 "Fix broken install" "Starting ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt update --fix-missing -y
-notify-send -u normal -t 5200 "checking" "check install missing ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt install -f -y
-notify-send -u normal -t 5200 "DONE" "install ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt upgrade -y
-notify-send -u normal -t 5200 "Checking Full & dpkg" "Full Upgrade ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k dpkg --configure -a
-echo "$myrootpass" | sudo -S -k apt full-upgrade -y
-notify-send -u normal -t 5200 "DONE" "full-upgrade ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt dist-upgrade -y
-notify-send -u normal -t 5200 "DONE" "dist-upgrade ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt -o Dpkg::Options::="--force-overwrite" upgrade -y
-notify-send -u normal -t 4200 "DONE" "force-overwrite ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt autoremove -y
-notify-send -u normal -t 4200 "DONE" "AutoRemove ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt remove -y
-notify-send -u normal -t 4200 "DONE" "Remove ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt clean -y
-notify-send -u normal -t 4200 "DONE" "Clean ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k apt autoclean -y
-#------------------------#
-echo ""
-#------------------------#
-notify-send -u normal -t 4200 "Done Update Upgrade have been done" "exiting background" -i $Ibypassed
-notify-send -u normal -t 4200 "PIP3 UPDATE" "done ..." -i $Ibypassed
-pip3 install --upgrade pip --user
-notify-send -u normal -t 4200 "PIP3 UPDATE" "done ..." -i $Ibypassed
-pip install --upgrade pip --user
-notify-send -u normal -t 4200 "root PIP3 UPDATE" "done ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k pip3 install --upgrade pip --user --no-warn-script-location
-notify-send -u normal -t 4200 "root pip UPDATE" "done ..." -i $Ibypassed
-echo "$myrootpass" | sudo -S -k pip install --upgrade pip --user --no-warn-script-location
-notify-send -u normal -t 19200 "Done" "everything" -i $Ibypassed
+PATH_updateme_logData="/home/$USER/lab4box/updateme/log/$timen1w"
+if [ -d "$PATH_updateme_logData" ]; then
+    printf "\e[1;37m[ SAME DAY DIFFERENT SHIT ] $PATH_updateme_logData \e[0m\n"
+else
+    mkdir -p $PATH_updateme_logData
+fi
+notify-send -u normal -t 11555 "#1 Start Updating and Upgrading" -i $Ibypassed
+echo "$myrootpass" | sudo -S -k rm -r /var/cache/apt/archives/lock |& tee -a $PATH_updateme_logData/SUDO_APT-$timen0w.log
+echo "$myrootpass" | sudo -S -k -r /var/lib/dpkg/lock-frontend |& tee -a $PATH_updateme_logData/SUDO_APT-$timen0w.log
+echo "$myrootpass" | sudo -S -k rm -r /var/lib/dpkg/lock |& tee -a $PATH_updateme_logData/SUDO_APT-$timen0w.log
+echo "$myrootpass" | sudo -S -k apt update --fix-missing -y |& tee -a $PATH_updateme_logData/SUDO_APT-$timen0w.log
+echo "$myrootpass" | sudo -S -k apt upgrade --fix-missing -y |& tee -a $PATH_updateme_logData/SUDO_APT-$timen0w.log
+echo "$myrootpass" | sudo -S -k apt autoremove -y |& tee -a $PATH_updateme_logData/SUDO_APT-$timen0w.log
+notify-send -u normal -t 14555 "#2 Done Updated and Upgraded" -i $Ibypassed
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "#---------------[ $datex ]---------------#" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ connected devices (wifi) ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+myInterFace=$(ip route get 8.8.8.8 | awk '/dev/ {f=NR} f&&NR-1==f' RS=" ")
+cmd3=$( (echo "$myrootpass" | sudo -S -k arp-scan -l --interface=$myInterFace | grep -E "^[0-9]{1,3}+.+[0-9]{1,3}+.+[0-9]{1,3}+.+[0-9]{1,3}.+" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ publich ip address ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+myPublicIp=$( (curl -s -4 icanhazip.com | grep -E -o "^[0-9]+.[0-9]+.[0-9]+.[0-9]{1,3}" |& tee -a $PATH_updateme_logData/info-$timen0w.txt))
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ localhost ip address ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+myPrivateIp=$( (ip route get 1.2.3.4 | awk '{print $7}' |& tee -a $PATH_updateme_logData/info-$timen0w.txt))
+notify-send -u normal -t 7888 "Private ip" "$myPublicIp" -i $Iip
+notify-send -u normal -t 9999 "Local ip" "$myPrivateIp" -i $Iip
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ ports listen $datex ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+cmd4=$( (netstat -tulpn | grep LISTEN |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ arp ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && arp |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ ip forward status  ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+cmd0=$( (cat /proc/sys/net/ipv4/ip_forward) )
+if [[ "$cmd0" == "0" ]];
+then
+    T1=$( (echo "[ ip forward is : OFF ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+else
+    T1=$( (echo "[ ip forward is : ON ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+fi
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ ESTABLISHED TCP  ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+cmd2=$( (lsof -i -P -n |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ Speed Test ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && speedtest-cli |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+T1=$( (echo "" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && echo "[ IPS FROM NETSTAT ]" |& tee -a $PATH_updateme_logData/info-$timen0w.txt && netstat -antp | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' |& tee -a $PATH_updateme_logData/info-$timen0w.txt) )
+exo-open --launch FileManager $PATH_updateme_logData/ && exo-open --launch FileManager $PATH_updateme_logData/info-$timen0w.txt
+notify-send -u normal -t 5555 "#END OF LOG" "Happy Now?" -i $Ibypassed
+oe=$( (echo $$) )
+kill -9 $oe
 exit
