@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 #updated 2022/06/25
+#-----------------------------
+# You need SpeedTest Installed 
+# sudo apt install speedtest-cli
+#-----------------------------
 clear
 PATH_updateme="/home/$USER/lab4box/updateme"
 if [ -d "$PATH_updateme" ]; then
