@@ -3,11 +3,11 @@
 Version=1.0
 Type=Application
 Terminal=false
-Icon[en_US]=/opt/backbox/lab4box/checkport/icon/icon.png
+Icon[en_US]=/opt/backbox/lab4box/checkport/icon.png
 Name[en_US]=CHKPorts
 Exec=sh -c "cd /opt/backbox/lab4box/checkport;bash run.sh; echo; /bin/bash"
 Comment[en_US]=CHKPorts
 Name=CHKPorts
 Comment=CHKPorts
-Icon=/opt/backbox/lab4box/checkport/icon/icon.png
+Icon=/opt/backbox/lab4box/checkport/icon.png
 StartupNotify=false
