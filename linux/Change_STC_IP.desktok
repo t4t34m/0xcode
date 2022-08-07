@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=/opt/backbox/lab4box/change_ip/icon/ip.ico
+Name[en_US]=Change_STC_IP
+Exec=sh -c "python3 /opt/backbox/lab4box/change_ip/changeip.py; echo; ${SHELL:-bash}"
+Comment[en_US]=Burp Suite 2022 08 01
+Name=Change_STC_IP
+Comment=Change_STC_IP
+Icon=/opt/backbox/lab4box/change_ip/icon/ip.ico
+
+
