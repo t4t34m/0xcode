@@ -6,7 +6,9 @@ sudo service apache2 restart
 sudo ufw allow 443/tcp
 sudo ufw allow in "Apache Full"
 sudo a2enmod ssl
+sudo apt install iptables-persistent
 sudo iptables -I INPUT 5 -p tcp --dport 443 -j ACCEPT
+sudo netfilter-persistent save
 
 #----[ Create Cert : ]
 sudo openssl genrsa -aes128 -out private.key 2048
