@@ -1,0 +1,59 @@
+:::::::::::::::::::::::::::::::::::::
+sudo apt update && sudo apt install apache2 apache2-utils
+sudo htpasswd -c /etc/apache2/.htpasswd admin
+sudo a2enmod rewrite
+sudo service apache2 restart
+sudo ufw allow 443/tcp
+sudo ufw allow in "Apache Full"
+sudo a2enmod ssl
+sudo iptables -I INPUT 5 -p tcp --dport 443 -j ACCEPT
+
+#----[ Create Cert : ]
+sudo openssl genrsa -aes128 -out private.key 2048
+sudo openssl req -new -days 365 -key private.key -out request.csr
+sudo openssl x509 -in request.csr -out certificate.crt -req -signkey private.key -days 365
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout google.com.sa.key -out google.com.sa.crt
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout google.com.key -out google.com.crt -subj "/CN=google.com"
+kubectl create secret tls google.com --key="google.com.key" --cert="google.com.crt"
+kubectl apply -kubectl apply -f YFile.yml
+kubectl apply -kubectl apply -f YFile_80443.yml
+kubectl apply -kubectl apply -f YFf.yml
+sudo ufw allow 3128
+curl -v -x http://t4t34:123@192.168.100.5:3128 http://www.google.com/
+# CHANGE SSL CERT FROM MOTHER:
+sudo nano /etc/ca-certificates.conf
+mkdir ~/PolarProxy
+cd ~/PolarProxy/
+curl https://www.netresec.com/?download=PolarProxy | tar -xzf -
+sudo ./PolarProxy -v -p 443,80 -x /usr/local/share/polarproxy.cer --certhttp 10080 -w ../polarproxy.pcap 
+./PolarProxy -v -p 10080,8118,80,443 --certhttp 10080 -w ~/polarproxy8118.pcap
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+sudo geany /etc/apache2/sites-available/default-ssl.conf
+#SSLCertificateFile /etc/ssl/certs/apache-selfsigned.crt
+#SSLCertificateKeyFile /etc/ssl/private/apache-selfsigned.key
+
+:::::::::::::::::::::::::::::::::::::
+#----[ FOR SSL HTTPS ADD IN : ]
+sudo geany /etc/apache2/sites-enabled/000-default.conf 
+Redirect / https://192.168.100.5/
+#-------#
+#----[ OPEN > sudo nano /etc/apache2/sites-available/default-ssl.conf   ]
+ADD : 
+#-------#
+SSLEngine on
+SSLCertificateChainFile /etc/ssl/certs/CN_google.com.sa.crt
+SSLCertificateKeyFile /etc/ssl/private/KEY_google.com.sa.key
+SSLCertificateChainFile /etc/ssl/certs/CN_google.com.sa.crt
+SSLCertificateFile /etc/ssl/certs/GOOGLE.COM.SA.cert.pem
+SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+SSLProtocol All -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
+SSLHonorCipherOrder On
+#-------------#
+#----[ SAVE AND ::
+:::::::::::::::::::::::::::::::::::::
+sudo a2ensite default-ssl
+sudo apache2ctl configtest
+sudo apache2ctl -t
+sudo service apache2 restart 
+:::::::::::::::::::::::::::::::::::::
+https://192.168.100.1/
