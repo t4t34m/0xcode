@@ -13,3 +13,7 @@ sudo mysql -u root -p
 #-> FLUSH PRIVILEGES;
  exit;
  
+#ADD NODE TO APACHE :
+#/etc/apache2/apace2.config<--- OPEN AND ADD:
+#ProxyPass /node http://localhost:3000/
+AND-> UNCO # from modules/mod_proxy.so
