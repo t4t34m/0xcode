@@ -15,6 +15,10 @@ sudo openssl x509 -in request.csr -out certificate.crt -req -signkey private.key
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout google.com.sa.key -out google.com.sa.crt
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout google.com.key -out google.com.crt -subj "/CN=google.com"
 kubectl create secret tls google.com --key="google.com.key" --cert="google.com.crt"
+sudo cp -R GOOGLE.COM.SA.cert.pem /usr/local/share/ca-certificates
+sudo cp -R CN_google.com.sa.crt /usr/local/share/ca-certificates
+sudo cp -R KEY_google.com.sa.key /usr/local/share/ca-certificates
+
 kubectl apply -kubectl apply -f YFile.yml
 kubectl apply -kubectl apply -f YFile_80443.yml
 kubectl apply -kubectl apply -f YFf.yml
