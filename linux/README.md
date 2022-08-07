@@ -1,22 +1,46 @@
 # LINUX CMD
 
 ```
+# KILL PORT : 
+sudo kill -9 $(sudo lsof -t -i:9050)
+
+# MY IP : TOR 
+torsocks wget -qO - https://api.ipify.org; echo
+curl ipv4.icanhazip.com
+sudo systemctl start tor
+
+# IPs(local) Connected to WiFi : 
+sudo arp-scan --interface=wlx20e5170be60d --localnet
+
+#TCPDUMP print only ip address clear:
+sudo tcpdump -nn -q ip -l | awk '{ ip = gensub(/([0-9]+.[0-9]+.[0-9]+.[0-9]+)(.*)/,"\\1","g",$3); if(!d[ip]) { print ip; d[ip]=1; fflush(stdout) } }'
+
+#TCPDUMP Spoof port 80 or 25 : 
+sudo tcpdump -vv -x -X -s 1500 -i any 'port 80' | egrep --color=auto -i 'password=|pass=|email=|login_pass|email=|pass_login=|'
+
+#TCPDUMP save to file : 
+sudo tcpdump -w loging.pcap -vv -x -X -s 1500 -i any 'port 80' | egrep -i 'password=|pass=|email=|login_pass|email=|pass_login=|' --line-buffered -B20
+
 #fix panel error (missing)
 ALT+F2 and type: xfce4-panel --restart
 or
 ALT+F2 and type: xfce4-panel --preferences
+
 #fix linux time and data ... from terminal:
 sudo timedatectl set-timezone Asia/Riyadh
 echo "Asia/Riyadh" | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
+
 #install HyperV windows 10 open powershell as admin:
 DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
 Dism /online /Enable-Feature /FeatureName:HypervisorPlatform
 Dism /online /Enable-Feature /FeatureName:VirtualMachinePlatform
+
 #stop HyperV :
 bcdedit /set hypervisorlaunchtype off
 or
 DISM /Online /Disable-Feature:Microsoft-Hyper-V
+
 #Next : Start > search : features <-- Virtual Machine Platform + Windows Hypervisor Platform than restart pc.
 #install VPN HMA .. 
 sudo apt-get install network-manager-openvpn-gnome
@@ -28,35 +52,48 @@ sudo cp ca.crt /usr/local/share/ca-certificates
 sudo cp hma* /usr/local/share/ca-certificates
 sudo update-ca-certificates
 2: go to > wIfI > add VPN > select (import a file) select /vpn/TCP/ .. add username & password from HMA
+
 # get tor ips to ipblock.conf : allow from ip...
 wget -q https://www.dan.me.uk/torlist/ -O - | sed 's/^/allow from /g' > /var/www/html/ipblock.conf;
+
 # remove space :
 cat output.txt | sed -e 's/[\t ]//g;/^$/d'
+
 # Clean /var/log or only gz file:
 sudo find /var/log -type f -delete
 sudo find /var/log -type f -delete -regex ".*\.gz$"
 sudo find /var/log -type f -delete -regex ".*\.[0-9]$"
+
 # read from output.txt line (3) to line (6) :
 sed -n '3,6p' output.txt
+
 # remove last string in output.txt :
 sed 's/.\{1\}$//' output.txt
+
 # remove string from output.txt ex:> {"result": < :
 sed -i -e 's/XXXXXXX//g' output.txt
 sed -i -e 's/{"result"://g' output.txt
+
 #remove duplicated in output.txt 
 sed '/^$/d' output.txt | awk '!a[$1]++' >> output_clear.txt
+
 # tested remove `{"result":` and `}` in the end , :
 sed -i -e 's/{"result"://g' output.txt && sed 's/.\{1\}$//' output.txt
+
 # find and replace in the end } replace it with , :
 sed -i -e 's/{"result"://g' out.txt && sed -i -e 's/.\{1\}$/,/g' out.txt
+
 # find all *.log file and remove :
 find . -name "*.log" | xargs rm
+
 # find and grep apiKey string in all .sql files :
 find . -iname "*.sql" | while read -r x; do cat $x | grep "apiKey"; done
+
 # cat and grep between "" refresh_token:"xxxxxxxx",: xxxxx will be output
 cat errors.txt | grep -oP 'refresh_token":"\K[^"]+'
 - gnome-terminal -- bash -c "<command>; exec bash"
 ```
+
 #find out all ips connected to your WiFi :
 sudo apt-get install arp-scan
 ifconfig
