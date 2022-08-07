@@ -15,3 +15,10 @@
     Export-WindowsDriver -Online -Destination "C:\savebackup\"
 ##### ::::: To restore after format from C:\savebackup to C:\restorebackup: 
     Export-WindowsDriver -Path "C:\savebackup\" -Destination "C:\restorebackup"
+
+# SHSH save as shsh.bat + change:979A1AE29802E + 14.3
+```batch
+@ECHO OFF
+FOR /F %%A IN (no.txt) DO mkdir C:\SHSH\ %%A | tsschecker.exe tsschecker -d iPhone11 --nocache --boardconfig N104AP -e 979A1AE29802E -i 14.3 -s --apnonce %%A --save-path C:\SHSH\ %%A -s
+pause
+```
