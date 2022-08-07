@@ -75,8 +75,16 @@ pip3 install requests[socks] --user
 pip3 install pip lxml==4.6.3 --user
 pip3 install PyTelegramBotAPI==2.2.3 --user
 pip3 install setuptools --user
+sudo snap install barrier
+sudo apt install python-nautilus python3-gi
+sudo pip3 install bpytop glances bottle
 pip3 install pandas --trusted-host pypi.org --trusted-host files.pythonhosted.org --user
 pip3 install mysqlclient --user
+pip install opencv-python
+pip install python-imagesearch
+sudo apt install tesseract-ocr-ita 
+sudo apt install libtesseract-dev
+sudo apt install tesseract-ocr
 pip install Scrapy 
 pip3 install selenium --user
 sudo pip3 install -U selenium
