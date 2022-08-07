@@ -1,0 +1,54 @@
+----1----
+sudo ufw allow 3443 comment "TOR-circuit"
+sudo ufw allow 3480 comment "TOR"
+sudo ufw enable
+sudo reboot
+----2----
+docker-compose pull obfs4-bridge
+sudo apt-get install tor obfs4proxy
+----3----
+sudo geany /etc/tor/torrc
+----^
+RunAsDaemon 1
+BridgeRelay 1
+Log notice file /var/log/tor/notices.log
+Log debug file /var/log/tor/debug.log
+Log notice syslog
+Log debug stderr
+ORPort 3224
+ServerTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+ServerTransportListenAddr obfs4 0.0.0.0:3225
+ExtORPort autocomfea
+## Address your-dyanmic-dns
+Nickname SatoshiNakamoto
+SatoshiNakamoto <0xc78e9d242552d5da800a87b588dc3d2024a9fa0f@ethmail.cc>
+RelayBandwidthBurst 200 KB # But allow bursts up to 200KB/s (1600Kbps)
+ExitPolicy reject *:*
+PublishServerDescriptor 0
+----
+----4----
+sudo geany /lib/systemd/system/tor@default.service
+#AND ADD THIS search..
+----^
+NoNewPrivileges=no
+----
+----5----
+sudo geany /etc/tor/torrc
+##
+# OBFS4 Tor Bridge Configuration
+##
+ExitPolicy reject *:*
+RunAsDaemon 1
+ORPort 8817
+BridgeRelay 1
+PublishServerDescriptor 0
+ServerTransportPlugin obfs3,obfs4 exec /usr/bin/obfs4proxy
+ServerTransportListenAddr obfs4 0.0.0.0:2888
+ExtORPort auto
+ContactInfo Nathaniel Suchy <me@xdx.me>
+Nickname XDX
+-----
+----6-----
+sudo iptables -I INPUT 1 -p tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 2888 -j ACCEPT
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 2888
