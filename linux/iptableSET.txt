@@ -1,0 +1,166 @@
+#!/usr/bin/bash
+readansw(){
+    read -p $'\n\e[1;37m#: \e[0m' readans
+}
+printf """\e[1;37m 1) close \n 2) open \n 3) easy(rec) \e[0m\n"""  
+readansw
+if [[ "$readans" == "1" ]]; 
+then
+printf """\e[1;38;5;197m CLOSE ALL SHIT \e[0m"""  
+sudo service tor stop
+sudo service postgresql stop
+sudo service apache2 stop
+sudo service ssh stop
+sudo service mysql stop
+sudo service ufw stop
+sudo sysctl -w net.ipv4.conf.all.route_localnet=0
+sudo sysctl -w net.ipv4.ip_forward=0
+sudo sysctl -w net.ipv6.conf.all.forwarding=0
+sudo sysctl net.ipv6.conf.all.forwarding=0
+sudo sysctl net.ipv4.conf.eno1.forwarding=0
+sudo sysctl net.ipv4.conf.all.forwarding=0
+sudo iptables -Z
+sudo iptables -F
+sudo iptables --flush
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t nat -X
+sudo iptables -t mangle -F
+sudo iptables -t mangle -X
+sudo iptables -F
+sudo iptables -X
+sudo iptables-save
+sudo service iptables stop
+sudo service iptables start
+sudo lsof -i -P -n | grep LISTEN
+sudo ss -tulw
+fi 
+if [[ "$readans" == "4" ]]; 
+then
+sudo iptables -Z
+sudo iptables -F
+sudo iptables --flush
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t nat -X
+sudo iptables -t mangle -F
+sudo iptables -t mangle -X
+sudo iptables -F
+sudo iptables -X
+sudo iptables-save
+sudo service ufw start
+sudo ufw enable
+sudo ufw allow "Apache Full"
+sudo a2enmod ssl
+sudo apache2ctl configtest
+sudo systemctl restart apache2
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+echo "Redirect / https://192.168.100.5"
+echo "sudo a2ensite ssl.conf"
+fi 
+if [[ "$readans" == "3" ]]; 
+then
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo iptables -Z
+sudo iptables -F
+sudo iptables --flush
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t nat -X
+sudo iptables -t mangle -F
+sudo iptables -t mangle -X
+sudo iptables -F
+sudo iptables -X
+sudo iptables-save
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to-destination 192.168.100.5:8443
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+sudo iptables-save
+fi 
+if [[ "$readans" == "2" ]]; 
+then
+printf """\n\e[1;38;5;120m ALL WILL BE OPENED 443,22,53,80,8080 \e[0m\n"""  
+sudo sysctl -w net.ipv4.conf.all.route_localnet=1
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+sudo sysctl net.ipv6.conf.all.forwarding=1
+sudo sysctl net.ipv4.conf.eno1.forwarding=1
+sudo sysctl net.ipv4.conf.all.forwarding=1
+sudo service apache2 stop
+sudo service tor stop
+sudo service ufw stop
+sudo iptables -Z
+sudo iptables -F
+sudo iptables --flush
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -t nat -F
+sudo iptables -t nat -X
+sudo iptables -t mangle -F
+sudo iptables -t mangle -X
+sudo iptables -F
+sudo iptables -X
+sudo iptables-save
+sudo iptables -A INPUT -i lo -j ACCEPT 
+sudo iptables -A INPUT -m state --state ESTABLICHED,RELATED -j ACCEPT
+sudo iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+sudo iptables -A INPUT -s 192.168.100.0/24 -p tcp -m tcp --dport 22 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 1 -p udp --dport 8080 -j ACCEPT
+sudo iptables -I INPUT 1 -p udp --dport 443 -j ACCEPT
+sudo iptables -I INPUT 1 -p udp --dport 80 -j ACCEPT
+sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED
+sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 8080 -j REDIRECT --to-port 80
+sudo iptables -A INPUT -p tcp -m tcp --sport 443 -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --sport 8080 -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+sudo iptables -I FORWARD -p tcp --dport 443 -j ACCEPT
+sudo iptables -I FORWARD -p tcp --dport 80 -j ACCEPT
+sudo iptables -t nat -A PREROUTING -s 192.168.100.98 -p tcp --dport 443 -j DNAT --to-destination 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -s 192.168.100.98 -p tcp --dport 80 -j DNAT --to-destination 192.168.100.5:8080
+sudo iptables -t nat -A POSTROUTING -p tcp -d 192.168.100.5 --dport 443 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -p tcp -d 192.168.100.5 --dport 80 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -p tcp -d 192.168.100.5 --dport 8080 -j MASQUERADE
+sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j DNAT --to 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8080
+sudo iptables -t filter -A FORWARD -i wlx20e5170be60d -p udp --dport 80 -j ACCEPT
+sudo iptables -t filter -A FORWARD -i wlx20e5170be60d -p udp --dport 443 -j ACCEPT
+sudo iptables -t filter -A FORWARD -i wlx20e5170be60d -p udp --dport 8080 -j ACCEPT
+sudo iptables -A PREROUTING -t nat -i wlx20e5170be60d -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo iptables -A PREROUTING -t nat -i wlx20e5170be60d -p tcp --dport 443 -j REDIRECT --to-port 8080
+sudo iptables -A PREROUTING -t nat -i any -p tcp --dport 80 -j DNAT --to 192.168.100.5:8080
+sudo iptables -A PREROUTING -t nat -i any -p tcp --dport 443 -j DNAT --to 192.168.100.5:8080
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+sudo iptables -t nat -A PREROUTING -p tcp -m tcp -s 192.168.100.0/24 --dport 80 -j DNAT --to-destination 192.168.100.5
+sudo iptables -t nat -A PREROUTING -p tcp -m tcp -s 192.168.100.0/24 --dport 443 -j DNAT --to-destination 192.168.100.5
+sudo iptables -t nat -A PREROUTING -p tcp -m multiport --dports 443,80 -j DNAT --to-destination 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -p tcp -i wlx20e5170be60d --dport 80 -j DNAT --to-destination 192.168.100.5:8080
+sudo iptables -t nat -A PREROUTING -p tcp -i wlx20e5170be60d --dport 443 -j DNAT --to-destination 192.168.100.5:8080
+sudo iptables -A FORWARD -p tcp -d 192.168.100.5 --dport 8080 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+sudo iptables-save 
+sudo apachectl configtest
+sudo service apache2 restart
+sudo service apache2 start
+sudo lsof -i -P -n | grep LISTEN
+sudo ss -tulw
+
+fi 
+
+#code /etc/sysctl.d/99-sysctl.conf
