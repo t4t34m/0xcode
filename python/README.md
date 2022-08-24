@@ -25,3 +25,16 @@ for x in range(100, 0, -1):
     #to remove --> {"result": and in the end } from json
     sed -i -e 's/{"result"://g' output.txt && sed 's/.\{1\}$//' output.txt
 ---
+
+```python
+#https://www.x.x/@U/x/N
+if len (sys.argv) != 2 :
+    uages()
+    sys.exit (1)
+else :
+    RapidapiCom_x_rapidapi_key = "xxxx"
+    RapidapiCom_url = "xxxx"
+    magicBul = sys.argv[1].split("/")[3]
+    username = magicBul.split("@")[1] #U
+    id = sys.argv[1].split("/")[-1] #N
+```
