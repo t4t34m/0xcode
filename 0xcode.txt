@@ -1,0 +1,211 @@
+#TOR REFRESH: 
+torsocks wget -qO - https://api.ipify.org; echo
+wget -qO - https://api.ipify.org; echo
+echo -e 'AUTHENTICATE "T00RPASSWORDHERER"\r\nsignal NEWNYM\r\nQUIT' | nc 127.0.0.1 9051
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+#ADD PASSWORD :
+tor --hash-password "T00RPASSWORDHERER"
+sudo apt install apt-transport-https curl
+sudo -i
+echo "deb https://deb.torproject.org/torproject.org/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/tor.list
+curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
+gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
+sudo apt update
+exit
+sudo apt install tor tor-geoipdb torsocks deb.torproject.org-keyring
+sudo apt install privoxy
+sudo nano /etc/privoxy/config
+forward-socks5 / localhost:9050 .
+sudo systemctl restart privoxy
+torsocks spotify
+curl ipv4.icanhazip.com
+sudo systemctl start tor
+torsocks curl ipv4.icanhazip.com
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+sudo apt install qpdf
+sudo apt install libimobiledevice-utils
+sudo apt install dpkg-dev libldap2-dev libpam0g-dev libdb-dev cdbs libsasl2-dev debhelper libcppunit-dev libkrb5-dev comerr-dev libcap2-dev libecap3-dev libexpat1-dev libxml2-dev autotools-dev libltdl-dev pkg-config libnetfilter-conntrack-dev nettle-dev libgnutls28-dev devscripts gnutls-bin krb5-user
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+sudo apt install xattr
+sudo gem install ipa_analyzer --user-install
+sudo ipa_analyzer -i tiktok.ipa -p --info-plist --prov
+zip -9 -y -r tiktok.ipa xattr
+xattr -rc tiktok.ipa 
+xattr -rc tiktok.ipa l
+xattr -rc tiktok.ipa -s
+zip -9 -y -r tiktok.ipa . -i tes3r
+ipa_analyzer -i tiktok.ipa -p --info-plist --prov
+cd ipa/
+zip -9 -y -r tiktok.ipa Payload/
+ipa_analyzer -i tiktok.ipa -p --info-plist --prov | grep -E "ExpirationDate|CFBundleIdentifier|DER-Encoded-Profile"
+ipa_analyzer tiktok.ipa Payload/
+ipa_analyzer tiktok.ipa -i
+ipa_analyzer -i tiktok.ipa --prov --info-plist -v -p
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+# spy on iphone syslog 
+idevicesyslog -u XXXUIDXXX | egrep --color=auto --color=auto -E -o "WiFi.+.|connect.+."
+idevicedebug -u XXXUIDXXX -d run com.tiktok.xxx
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+# iptable 
+sudo apt install iptables-persistent
+192.168.33.33 <-- IPHONE IP
+192.168.8.100 <-- BurpSuite Ip
+# edit this : /etc/sysctl.conf
+# or cmd :
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo sysctl -w net.ipv4.conf.all.route_localnet=1
+sudo sysctl -p
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+#BURP 8080 IP: 192.168.8.100
+sudo iptables -A FORWARD -i waln0WiFiInterFaceHere -j ACCEPT
+sudo iptables -A FORWARD -o waln0WiFiInterFaceHere -j ACCEPT
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo sysctl -p /etc/sysctl.conf 
+sudo iptables -t nat -A POSTROUTING -o waln0WiFiInterFaceHere -j MASQUERADE 
+sudo iptables -t nat -A PREROUTING -i waln0WiFiInterFaceHere -p tcp --dport 443 -j DNAT --to 192.168.8.100:8080
+sudo iptables -t nat -A PREROUTING -i waln0WiFiInterFaceHere -p tcp --dport 80 -j DNAT --to 192.168.8.100:8080
+sudo iptables -A FORWARD -i waln0WiFiInterFaceHere -p tcp --dport 443 -d 192.168.8.100 -j ACCEPT
+sudo iptables -A FORWARD -i waln0WiFiInterFaceHere -p tcp --dport 80 -d 192.168.8.100 -j ACCEPT
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+sudo iptables -t nat -A POSTROUTING ! -d 192.168.8.0/24 -o waln0WiFiInterFaceHere -j SNAT --to-source 192.168.8.100
+sudo iptables -t nat -A POSTROUTING ! -d 192.168.8.0/16 -o waln0WiFiInterFaceHere -j SNAT --to-source 192.168.8.100
+sudo iptables -t nat -A POSTROUTING ! -d 192.168.8.0/16 -o waln0WiFiInterFaceHere -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING ! -d 192.168.8.0/24 -o waln0WiFiInterFaceHere -j MASQUERADE
+sudo iptables -t nat -A PREROUTING --in-interface waln0WiFiInterFaceHere --protocol udp --destination-port 21:9000 --jump DNAT --to-destination 192.168.8.100:21-9000
+sudo iptables -A FORWARD -i waln0WiFiInterFaceHere -p tcp --dport 80 -d 192.168.8.100 -j ACCEPT
+sudo iptables -t nat -A PREROUTING -i waln0WiFiInterFaceHere -p tcp --dport 80 -j DNAT --to-destination 192.168.8.100:8080
+sudo iptables -t nat -A PREROUTING -i waln0WiFiInterFaceHere -p tcp --dport 443 -j DNAT --to-destination 192.168.8.100:8080
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+sudo iptables -t nat -A POSTROUTING -o waln0WiFiInterFaceHere -j MASQUERADE
+sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i uap0 -o waln0WiFiInterFaceHere -j ACCEPT
+sudo mkdir /etc/iptables/
+sudo iptables-save > /etc/iptables/iptables.rules
+sudo systemctl --system daemon-reload
+sudo systemctl enable iptables
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+sudo iptables -A PREROUTING -t nat -i waln0WiFiInterFaceHere -p tcp --dport 443 -j REDIRECT --to-port 8080
+sudo iptables -A FORWARD -i eno1EthInterFace -o waln0WiFiInterFaceHere -j ACCEPT
+sudo iptables -A FORWARD -i waln0WiFiInterFaceHere -o eno1EthInterFace -m conntrack --ctstate RELATED, ESTABLISHED -j ACCEPT
+sudo iptables -t nat -A OUTPUT -p udp --dport 162 -j DNAT --to-destination 192.168.8.100:1162
+sudo iptables -t nat -A POSTROUTING -o waln0WiFiInterFaceHere -j SNAT --to 192.168.8.100
+sudo iptables -t nat -A POSTROUTING -o waln0WiFiInterFaceHere -s 192.168.8.100 -p tcp --dport 443 -j SNAT --to 192.168.8.100:5443
+sudo iptables -t nat -A PREROUTING -p tcp -i waln0WiFiInterFaceHere -d 192.168.33.33 -j DNAT --to-destination 192.168.8.100
+sudo iptables -t nat -A PREROUTING -p udp -i waln0WiFiInterFaceHere -d 192.168.33.33 -j DNAT --to-destination 192.168.8.100
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.8.100:8080
+sudo iptables -t nat -A PREROUTING -p tcp -s 192.168.33.33 --dport 80 -j DNAT --to-destination 192.168.8.100:8080
+sudo iptables -t nat -A PREROUTING -p tcp -s 192.168.33.0/24 --dport 80 -j DNAT --to-destination 192.168.8.100:8080
+sudo iptables -t nat -A PREROUTING -p tcp -i waln0WiFiInterFaceHere --dport 80 -j DNAT --to-destination 192.168.8.100:8080
+sudo iptables -t nat -A OUTPUT -d 192.168.33.33 -j DNAT --to-destination 192.168.8.100
+sudo iptables -t nat -I PREROUTING -i waln0WiFiInterFaceHere -p tcp --dport 80 -j DNAT --to 192.168.8.100:8080
+sudo iptables -t mangle -A OUTPUT ! -d 192.168.33.0/24 -m addrtype --dst-type UNICAST -j CONNMARK --restore-mark
+sudo iptables -A INPUT -i waln0WiFiInterFaceHere ! -s 192.168.33.0/24 -m addrtype --src-type UNICAST -m mac --mac-source 3E:A1:E3:32:32:32 -j ACCEPT 
+sudo iptables-save
+sudo systemctl enabl --now iptables
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+# SSL SECTION : 
+/usr/local/share/ca-certificates
+sudo update-ca-certificates
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout apache-selfsigned.key -out apache-selfsigned.crt
+sudo chmod 600 apache-selfsigned.crt
+sudo chmod 600 apache-selfsigned.key
+sudo cp -R apache-selfsigned.crt /etc/ssl/certs/
+sudo cp -R apache-selfsigned.key /etc/ssl/private/
+sudo apachectl configtest
+sudo systemctl reload apache2
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+# create ssl (name: key.pem + cert.pem )
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
+# or one line (name: key2.pem + cert2.pem )
+openssl req -x509 -newkey rsa:4096 -keyout key2.pem -out cert2.pem -sha256 -days 365 -subj "/C=US/ST=Madina/L=Madina/O=STC/OU=Org/CN=www.stc.com.sa"
+# add dns with ssl (name:stccomsa.key + stccomsa.crt)
+openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout stccomsa.key -out stccomsa.crt -subj "/C=US/ST=Madina/L=Madina/O=STC/OU=Org/CN=www.stc.com.sa" -addext "subjectAltName=DNS:stc.com.sa,DNS:www.stc.com.sa,IP:127.0.0.1"
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+openssl pkcs12 -inkey domain.key -in domain.crt -export -out domain.pfx
+certutil -d sql:$HOME/.pki/nssdb -A -t "CT,c,c" -n "localhost" -i ca1.crt
+certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n GoAgent -i ca1.crt
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+openssl req -new -newkey rsa:2048 -nodes -out star_b22_stcpay_com_sa.csr -keyout star_b22_stcpay_com_sa.key -subj "/C=SA/ST=Riyadh/L=Riyadh/O=STCPAY/OU=STCPAY/CN=*.b22.stcpay.com.sa"
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+openssl genrsa -out server3.key 2048
+openssl rsa -in server3.key -out server3.key
+openssl req -sha256 -new -key server3.key -out server3.csr -subj "/C=US/ST=Madina/L=Madina/O=STC/OU=Org/CN=www.stc.com.sa" -addext "subjectAltName=DNS:stc.com.sa,DNS:www.stc.com.sa,IP:127.0.0.1"
+openssl x509 -req -sha256 -days 365 -in server3.csr -signkey server3.key -out server3.crt
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+# nano req.cnf <-- in terminal and paste :---
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+[req_distinguished_name]
+C = SA
+ST = MD
+L = Madinah
+O = STC
+OU = STC COM SA
+CN = www.stc.com.sa
+[v3_req]
+keyUsage = critical, digitalSignature, keyAgreement
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = *.stc.com.sa
+DNS.2 = *.stc.com.sa
+DNS.3 = *.stc.com.sa
+# ^save and cmd : 
+openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout cert1.key -out cert1.pem -config req.cnf -sha256
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+openssl genrsa -out ca1.key 2048
+openssl req -new -x509 -key ca1.key -out ca1.crt -days 365 -config config_ssl_ca1.cnf
+openssl genrsa -out market1.key 2048
+openssl req -new -sha256 -key market1.key -config config_ssl_ca1.cnf -out market1.csr
+echo 00 > ca.srl
+touch index.txt
+nano config_ca.cnf 
+---[ ca ]
+default_ca = my_ca
+[ my_ca ]
+serial = ./ca.srl
+database = ./index.txt
+new_certs_dir = ./
+certificate = ./ca1.crt
+private_key = ./ca1.key
+default_md = sha256
+default_days = 365
+policy = my_policy
+copy_extensions = copy
+
+[ my_policy ]
+countryName = match
+stateOrProvinceName = supplied
+organizationName = stc.com.sa
+commonName = stc.com.sa
+organizationalUnitName = optional
+commonName = supplied
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+openssl ca -config config_ca.cnf -out market1.crt -in market1.csr
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+#Using configuration from config_ca.cnf
+#Check that the request matches the signature
+#Signature ok
+#The Subject's Distinguished Name is as follows
+#countryName           :PRINTABLE:'SA'
+#stateOrProvinceName   :ASN.1 12:'MA'
+#localityName          :ASN.1 12:'Madina'
+#organizationName      :ASN.1 12:'STC'
+#organizationalUnitName:ASN.1 12:'STC COM SA'
+#commonName            :ASN.1 12:'STC COM SA'
+#emailAddress          :IA5STRING:'admin@stc.com.sa'
+#stc.com.sa:invalid type in 'policy' configuration
+#
+openssl req -in market.csr -noout -text 
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+#-Redirect "/" "https://your_domain_or_IP/"-#
+###::::::::::::###::::::::::::::::::###::::::::::::::::###::::::::::::::###:::::::::::::::::::::###:
+SSLEngine on
+SSLCertificateFile /var/www/html/ca1.crt
+SSLCertificateKeyFile /var/www/html/ca1.key
+ServerAdmin stc@stc.com.sa
+ServerName 192.168.8.100
+
